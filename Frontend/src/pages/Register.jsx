@@ -1,29 +1,28 @@
 import { useState } from 'react';
-import axios from 'axios'; 
+import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 
-const Login = () => {
+const Register = () => {
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    const handleLogin = async (e) => {
+    const handleRegister = async (e) => {
         e.preventDefault();
         try {
-            // --- FIX: Added https:// and full route endpoint ---
-            const res = await axios.post('https://finalproj-production-5d78.up.railway.app/api/auth/login', { email, password });
-            
-            // 1. Token save 
-            localStorage.setItem('token', res.data.token);
-            
-            // 2. to save userdata (Important for 'My Garage' filter)
-            localStorage.setItem('user', JSON.stringify(res.data.user));
+            // Live Railway backend register endpoint
+            await axios.post('https://finalproj-production-5d78.up.railway.app/api/auth/register', { 
+                name, 
+                email, 
+                password 
+            });
 
-            alert("Vroom Vroom! Login Successful 🏎️");
-            navigate('/dashboard');
+            alert("Account Created Successfully! Welcome to the squad 🏎️");
+            navigate('/'); // Account bante hi direct Login page par bhej dega
         } catch (err) {
             console.log(err);
-            alert("Access Denied! Check your credentials.");
+            alert("Registration Failed! Email might already exist.");
         }
     };
 
@@ -34,16 +33,26 @@ const Login = () => {
                     <h1 className="text-4xl font-black italic tracking-tighter uppercase">
                         CAR<span className="text-red-600 underline">ZONE</span>
                     </h1>
-                    <p className="text-gray-400 text-sm mt-2">Manage your luxury showroom</p>
+                    <p className="text-gray-400 text-sm mt-2">Create an account to join the showroom</p>
                 </div>
 
-                <form onSubmit={handleLogin} className="space-y-6">
+                <form onSubmit={handleRegister} className="space-y-5">
+                    <div>
+                        <label className="block text-xs font-bold text-gray-500 uppercase mb-1">Full Name</label>
+                        <input 
+                            type="text" 
+                            className="w-full bg-black border border-zinc-700 p-3 rounded focus:border-red-600 outline-none transition-all text-white"
+                            placeholder="Laiba Noor"
+                            onChange={(e) => setName(e.target.value)}
+                            required
+                        />
+                    </div>
                     <div>
                         <label className="block text-xs font-bold text-gray-500 uppercase mb-1">Email Address</label>
                         <input 
                             type="email" 
                             className="w-full bg-black border border-zinc-700 p-3 rounded focus:border-red-600 outline-none transition-all text-white"
-                            placeholder="admin@carzone.com"
+                            placeholder="yourname@carzone.com"
                             onChange={(e) => setEmail(e.target.value)}
                             required
                         />
@@ -59,19 +68,19 @@ const Login = () => {
                         />
                     </div>
                     <button type="submit" className="w-full bg-red-600 hover:bg-red-700 py-4 rounded font-black uppercase tracking-widest italic transition-all transform hover:skew-x-2">
-                        Enter Showroom
+                        Create Account
                     </button>
                 </form>
-                
+
+                <p className="text-center text-zinc-500 text-xs mt-6">
+                    Already have an account?{' '}
+                    <Link to="/" className="text-red-500 font-bold hover:underline">
+                        Login Here
+                    </Link>
+                </p>
             </div>
-            <p className="text-center text-zinc-500 text-xs mt-6">
-    Don't have an account?{' '}
-    <Link to="/register" className="text-red-500 font-bold hover:underline">
-        Register Here
-    </Link>
-</p>
         </div>
     );
 };
 
-export default Login;
+export default Register;
