@@ -11,7 +11,7 @@ const Login = () => {
         e.preventDefault();
         try {
             // Backend URL (Port 5000)
-            const res = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+            const res = await axios.post('finalproj-production-5d78.up.railway.app', { email, password });
             
             // 1. Token save 
             localStorage.setItem('token', res.data.token);

@@ -18,9 +18,10 @@ const Dashboard = () => {
   const user = JSON.parse(localStorage.getItem('user'));
   const userId = user?._id || user?.id;
 
+  // --- Railway URL Update ---
   const fetchCars = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/cars');
+      const response = await axios.get('https://finalproj-production-5d78.up.railway.app/api/cars');
       setCars(response.data);
     } catch (error) {
       console.error("Fetch Error:", error);
@@ -73,10 +74,11 @@ const Dashboard = () => {
         } 
       };
 
+      // --- Railway URL Update ---
       if (editingCarId) {
-        await axios.put(`http://localhost:5000/api/cars/${editingCarId}`, formData, config);
+        await axios.put(`https://finalproj-production-5d78.up.railway.app/api/cars/${editingCarId}`, formData, config);
       } else {
-        await axios.post('http://localhost:5000/api/cars', formData, config);
+        await axios.post('https://finalproj-production-5d78.up.railway.app/api/cars', formData, config);
       }
       
       setIsModalOpen(false);
@@ -92,7 +94,8 @@ const Dashboard = () => {
     if (window.confirm("Remove this beast?")) {
       try {
         const token = localStorage.getItem('token');
-        await axios.delete(`http://localhost:5000/api/cars/${id}`, {
+        // --- Railway URL Update ---
+        await axios.delete(`https://finalproj-production-5d78.up.railway.app/api/cars/${id}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         fetchCars(); 
@@ -122,10 +125,10 @@ const Dashboard = () => {
         </div>
       </nav>
 
-      {/* --- MAIN CONTENT (Ensured huge margin-top breakout so fixed nav never chokes it) --- */}
+      {/* --- MAIN CONTENT --- */}
       <main className="mt-48 sm:mt-32 p-4 md:p-8 max-w-7xl mx-auto relative z-10">
         
-        {/* --- HEADING & STATS LAYOUT (Clean and clear of any absolute overlap) --- */}
+        {/* --- HEADING & STATS LAYOUT --- */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-6">
           <div className="w-full md:w-auto">
             <h2 className="text-4xl md:text-5xl font-extrabold uppercase italic tracking-tighter leading-none mb-4 text-white">
