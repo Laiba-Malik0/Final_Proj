@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios'; 
+import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 
 const Login = () => {
@@ -12,10 +12,10 @@ const Login = () => {
         try {
             // --- FIX: Added https:// and full route endpoint ---
             const res = await axios.post('https://finalproj-production-5d78.up.railway.app/api/auth/login', { email, password });
-            
+
             // 1. Token save 
             localStorage.setItem('token', res.data.token);
-            
+
             // 2. to save userdata (Important for 'My Garage' filter)
             localStorage.setItem('user', JSON.stringify(res.data.user));
 
@@ -40,8 +40,8 @@ const Login = () => {
                 <form onSubmit={handleLogin} className="space-y-6">
                     <div>
                         <label className="block text-xs font-bold text-gray-500 uppercase mb-1">Email Address</label>
-                        <input 
-                            type="email" 
+                        <input
+                            type="email"
                             className="w-full bg-black border border-zinc-700 p-3 rounded focus:border-red-600 outline-none transition-all text-white"
                             placeholder="admin@carzone.com"
                             onChange={(e) => setEmail(e.target.value)}
@@ -50,8 +50,8 @@ const Login = () => {
                     </div>
                     <div>
                         <label className="block text-xs font-bold text-gray-500 uppercase mb-1">Password</label>
-                        <input 
-                            type="password" 
+                        <input
+                            type="password"
                             className="w-full bg-black border border-zinc-700 p-3 rounded focus:border-red-600 outline-none transition-all text-white"
                             placeholder="••••••••"
                             onChange={(e) => setPassword(e.target.value)}
@@ -62,14 +62,15 @@ const Login = () => {
                         Enter Showroom
                     </button>
                 </form>
-                
+
+
+                <p className="text-center text-zinc-500 text-xs mt-6">
+                    Don't have an account?{' '}
+                    <Link to="/register" className="text-red-500 font-bold hover:underline">
+                        Register Here
+                    </Link>
+                </p>
             </div>
-            <p className="text-center text-zinc-500 text-xs mt-6">
-    Don't have an account?{' '}
-    <Link to="/register" className="text-red-500 font-bold hover:underline">
-        Register Here
-    </Link>
-</p>
         </div>
     );
 };

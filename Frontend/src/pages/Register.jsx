@@ -11,8 +11,8 @@ const Register = () => {
     const handleRegister = async (e) => {
         e.preventDefault();
         try {
-            // Live Railway backend register endpoint
-            await axios.post('https://finalproj-production-5d78.up.railway.app/api/auth/register', { 
+            // --- FIXED: Changed /register to /signup to perfectly match your backend ---
+            await axios.post('https://finalproj-production-5d78.up.railway.app/api/auth/signup', { 
                 name, 
                 email, 
                 password 
