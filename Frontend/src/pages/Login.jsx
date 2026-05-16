@@ -10,14 +10,13 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            // Backend URL (Port 5000)
-            const res = await axios.post('finalproj-production-5d78.up.railway.app', { email, password });
+            // --- FIX: Added https:// and full route endpoint ---
+            const res = await axios.post('https://finalproj-production-5d78.up.railway.app/api/auth/login', { email, password });
             
             // 1. Token save 
             localStorage.setItem('token', res.data.token);
             
             // 2. to save userdata (Important for 'My Garage' filter)
-            // from backend 'res.data.user' object is saving
             localStorage.setItem('user', JSON.stringify(res.data.user));
 
             alert("Vroom Vroom! Login Successful 🏎️");
